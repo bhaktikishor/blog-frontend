@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>form</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Libre Caslon Text", serif;
+      }
+      html,
+      body {
+        overflow-x: hidden;
+      }
+      input,
+      textarea {
+        width: 100%;
+        height: 40px;
+        padding: 0 0 0 16px;
+        border-radius: 9px;
+        outline: none;
+        background-color: rgb(238, 236, 236);
+        border: 1px solid #e5e5e500;
+        transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+        margin-top: 1vw;
+      }
+      button {
+        width: 50%;
+        height: 40px;
+        padding: 0 0 0 16px;
+        border-radius: 9px;
+        outline: none;
+        background-color: rgb(238, 236, 236);
+        border: 1px solid #e5e5e500;
+        transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+        margin-top: 1vw;
+      }
+      label {
+        font-weight: bold;
+        font-size: 3vw;
+        padding: 2vw;
+      }
+      .custum-file-upload {
+        height: 40px;
+        width: 100%;
+        display: flex;
+
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+        outline: none;
+        background-color: rgb(238, 236, 236);
+
+        border-radius: 10px;
+        box-shadow: 0px 48px 35px -48px rgba(0, 0, 0, 0.1);
+      }
+
+      .custum-file-upload .text span {
+        font-weight: 400;
+        color: rgba(75, 85, 99, 1);
+      }
+      .custum-file-upload input {
+        display: none;
+      }
+      form {
+        width: 80%;
+        background-color: rgb(164, 164, 164);
+        padding: 10px;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="form-container"
+      style="
+        background-color: rgb(238, 236, 236);
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        height: auto;
+      "
+    >
+      <form id="blogForm" action="">
+        <label for="title">Blog title</label><br />
+        <input type="text" name="title" /><br /><br />
+        <label for="content">Blog content</label><br />
+        <textarea name="content" id="blogInput" rows="10" cols="60"></textarea>
+        <!-- <input type="text" /><br /><br /> -->
+        <label for="novel">Novel Name</label><br />
+        <input type="text" name="novel" /><br /><br />
+        <label for="author">Author name</label><br />
+        <input type="text" name="author" /><br /><br />
+        <label for="quote">Book quote</label><br />
+        <input type="text" name="quote" /><br /><br />
+        <label for="review">Book Review</label><br />
+        <input type="text" name="review" /><br /><br />
+        <label for="">Background Image</label><br />
+        <!-- <input type="file" /><br /><br /> -->
+        <label class="custum-file-upload" for="file">
+          <div class="text">
+            <span>Click to upload image</span>
+          </div>
+          <input type="file" id="file" />
+        </label>
+        <button type="submit" onclick="submitBlog()">Submit</button>
+      </form>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("blogForm");
+
+        if (!form) {
+          console.error("Form not found!");
+          return;
+        }
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          console.log("Submit button clicked");
+
+          const formData = {
+            title: document.querySelector('[name="title"]').value,
+            content: document.querySelector('[name="content"]').value,
+            author: document.querySelector('[name="author"]').value,
+            quote: document.querySelector('[name="quote"]').value,
+            review: document.querySelector('[name="review"]').value,
+            novel: document.querySelector('[name="novel"]').value,
+          };
+
+          try {
+            const response = await fetch("http://localhost:3000/api/post", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+            alert(result.message);
+            form.reset();
+          } catch (error) {
+            console.error("Submission failed:", error);
+            alert("Something went wrong. Please try again.");
+          }
+        });
+      });
+
+      function submitBlog() {
+        const blogContent = document.getElementById("blogInput").value;
+
+        fetch("http://localhost:3000/api/post", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ content: blogContent }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert("Blog posted!");
+          });
+      }
+    </script>
+  </body>
+</html>

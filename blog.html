@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <title>blog</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Lora", serif;
+      }
+      html,
+      body {
+        overflow-x: hidden;
+
+        background-color: #fefdf9;
+      }
+      .blog-container {
+        width: 100vw;
+      }
+      .blog-image {
+        width: 100%;
+        height: 30vh;
+      }
+      .blog-image img {
+        width: 100%;
+        opacity: 0.5;
+      }
+      .overlay {
+        background: rgb(0, 0, 0);
+        z-index: 1;
+      }
+      .blog .title {
+        text-align: center;
+        padding: 5px;
+        font-size: 3.5vw;
+        margin-bottom: 2vw;
+      }
+      .blog-section {
+        display: flex;
+        column-count: 3;
+        column-width: 500px;
+        justify-content: space-between;
+        margin-top: 2vw;
+      }
+
+      .content {
+        padding: 5px;
+        width: 50%;
+        margin: 2vh 4vw 2vh 4vw;
+      }
+      .left-section {
+        width: 20%;
+        padding: 5px;
+        text-align: center;
+      }
+      .right-section {
+        width: 20%;
+        text-align: center;
+        margin-right: 3vw;
+      }
+      .book-recommendation {
+        margin: 2vh 4vw 2vh 4vw;
+      }
+      .book-name {
+        font-weight: bold;
+      }
+      .book-quote {
+        font-family: monospace;
+      }
+      #quote {
+        font-size: 3vw;
+      }
+      .timestamp {
+        width: 100%;
+
+        padding: 1vw;
+        font-size: 1.5vw;
+        text-align: center;
+
+        justify-content: right;
+        display: flex;
+      }
+      .timestamp .date-time {
+        margin-right: 0;
+        width: 20vw;
+      }
+      .fontSize {
+        font-size: 1.5vw;
+      }
+      .copyright {
+        width: 100vw;
+        background-color: #48180b;
+        opacity: 0.9;
+        padding: 8px 10px;
+        color: #fff5e0;
+        text-align: center;
+        bottom: 0;
+      }
+      .icon-container {
+        display: none;
+      }
+      @media (max-width: 700px) {
+        .blog .title {
+          font-size: 3.5vw;
+        }
+        .fontSize {
+          font-size: 2.5vw;
+        }
+        #quote {
+          font-size: 5vw;
+        }
+        .blog-section {
+          display: inline;
+          width: 100%;
+          margin-top: 2vw;
+          padding: 10px;
+        }
+
+        .content {
+          width: 95%;
+        }
+        .left-section {
+          width: 100%;
+        }
+        .right-section {
+          width: 100%;
+        }
+      }
+      @media (max-width: 550px) {
+        .blog .title {
+          font-size: 5.5vw;
+        }
+        .fontSize {
+          font-size: 4vw;
+        }
+        #quote {
+          font-size: 6vw;
+        }
+        .icon-container {
+          display: flex;
+          color: rgb(234, 230, 230);
+          opacity: 0.8;
+          font-size: 3vw;
+          position: absolute;
+          top: 5px;
+          padding: 15px;
+          text-decoration: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="blog-container" id="blogContent"></div>
+    <div class="copyright">
+      <p>&copy; 2023 your Company. All rights reserved</p>
+    </div>
+  </body>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const blogId = params.get("id");
+    console.log(blogId);
+
+    fetch(`http://localhost:3000/api/post/${blogId}`)
+      .then((response) => response.json())
+      .then((post) => {
+        const blogContent = document.getElementById("blogContent");
+
+        // posts.forEach((post) => {
+        const formattedDate = new Date(post.created_at).toLocaleString(
+          "en-IN",
+          {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          }
+        );
+        console.log(formattedDate);
+        const postHTML = `<div class="blog-image overlay">
+            <img
+              src=${post.blog_image}
+              alt=""
+              width="100%"
+              height="100%"
+            />
+                  <a href="index.html" class="icon-container">
+
+    <i class="fa-solid fa-arrow-left"></i></a>
+                  </div>
+          </div>
+
+
+          <div class="blog">
+            <div class="title fontSize">${post.blog_title}</div>
+            <hr
+              style="
+                width: 90%;
+                align-items: center;
+                display: flex;
+                justify-content: center;
+                margin: auto;
+
+                border-top: 0.1vw solid rgb(232, 232, 232);
+              "
+            />
+            <div class="blog-section">
+              <div class="left-section">
+                <div class="timestamp">
+                  <div class="date-time">${formattedDate}</div>
+                </div>
+              </div>
+              <div class="content fontSize">
+                <p style="white-space: pre-wrap;">${post.blog_content}
+                 </p>
+              </div>
+              <div class="right-section">
+                <div class="book-recommendation">
+                  <div class="book-name fontSize">${post.blog_novel}- ${post.blog_novelauthor}</div>
+                  <div class="book-quote fontSize">
+                    <span id="quote">"</span>quotes ${post.blog_quote}"
+                  </div>
+                  <div class="review fontSize">
+                    <p>
+                     ${post.blog_quote}
+                    </p>
+
+                </div>
+              </div>
+            </div>
+          </div>  `;
+        blogContent.innerHTML = postHTML;
+      })
+
+      .catch((err) => {
+        document.getElementById("blogContent").innerText =
+          "Failed to load blog post.";
+        console.error("Error fetching blog:", err);
+      });
+  </script>
+</html>

@@ -1,0 +1,41 @@
+<header>
+        <nav>
+            <div class="logo" id="logo">LOGO</div>
+            <input type="checkbox" id="click">
+            <label for="click" class="button-bars">
+                <i class="fa-solid fa-bars"></i>
+            </i>
+            </label>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Login</a></li>
+            </ul>
+        </nav> 
+    </header>
+    <div class="intro">
+        <div class="content-box">
+        <p>Turning pages, shifting phases, and finding humor in life's romcom craziness at Pages and Phases!</p>
+        <h1>Pages & Phases
+        </h1>
+    </div>
+</div>
+.social a{
+    /* margin: 50px 10px 20px 10px; */
+    display:inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: #ffffff;
+    margin: 0 20px 20px 0;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 50%;
+    color: #0e0b04;
+    transition: all 0.5s ease-in;
+}
+
+.social a:hover{
+    color:#481E14;
+    background-color: #e6ded1;
+}
