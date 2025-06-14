@@ -40,7 +40,7 @@ document
   });
 
 // bloglist
-fetch("http://localhost:3000/api/post")
+fetch("https://blog-backend-63he.onrender.com/api/post")
   .then((res) => res.json())
   .then((posts) => {
     const blogList = document.getElementById("blogList");
@@ -67,4 +67,3 @@ fetch("http://localhost:3000/api/post")
   });
 
 // post blog
-

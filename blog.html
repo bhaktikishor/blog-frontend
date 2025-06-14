@@ -173,7 +173,7 @@
     const blogId = params.get("id");
     console.log(blogId);
 
-    fetch(`http://localhost:3000/api/post/${blogId}`)
+    fetch(`https://blog-backend-63he.onrender.com/api/post/${blogId}`)
       .then((response) => response.json())
       .then((post) => {
         const blogContent = document.getElementById("blogContent");
