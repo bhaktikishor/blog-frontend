@@ -106,7 +106,7 @@
           <div class="text">
             <span>Click to upload image</span>
           </div>
-          <input type="file" id="file" name="image" />
+          <input type="file" id="file" name="image" accept="image/" />
         </label>
         <button type="submit" onclick="submitBlog()">Submit</button>
       </form>
@@ -124,16 +124,39 @@
           e.preventDefault();
           console.log("Submit button clicked");
 
-          // const formData = {
-          //   title: document.querySelector('[name="title"]').value,
-          //   content: document.querySelector('[name="content"]').value,
-          //   author: document.querySelector('[name="author"]').value,
-          //   quote: document.querySelector('[name="quote"]').value,
-          //   review: document.querySelector('[name="review"]').value,
-          //   novel: document.querySelector('[name="novel"]').value,
-          // };
+          // image
+          const fileInput = document.getElementById("file");
+          const imageFile = fileInput.files[0];
+          let imageUrl = "";
 
-          const formData = new FormData(form);
+          if (imageFile) {
+            const imageData = new FormData();
+            imageData.append("file", imageFile);
+            imageData.append("upload_preset", "Blog-images"); // Replace with your preset
+
+            const cloudRes = await fetch(
+              "https://api.cloudinary.com/v1_1/your_cloud_name/image/upload",
+              {
+                method: "POST",
+                body: imageData,
+              }
+            );
+
+            const cloudData = await cloudRes.json();
+            imageUrl = cloudData.secure_url;
+          }
+
+          const formData = {
+            title: document.querySelector('[name="title"]').value,
+            content: document.querySelector('[name="content"]').value,
+            author: document.querySelector('[name="author"]').value,
+            quote: document.querySelector('[name="quote"]').value,
+            review: document.querySelector('[name="review"]').value,
+            novel: document.querySelector('[name="novel"]').value,
+            blog_image: imageUrl,
+          };
+
+          // const formData = new FormData(form);
 
           try {
             const response = await fetch(
