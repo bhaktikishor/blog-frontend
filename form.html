@@ -157,21 +157,21 @@
         });
       });
 
-      // function submitBlog() {
-      //   const blogContent = document.getElementById("blogInput").value;
+      function submitBlog() {
+        const blogContent = document.getElementById("blogInput").value;
 
-      //   fetch("https://blog-backend-63he.onrender.com/api/post", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({ content: blogContent }),
-      //   })
-      //     .then((response) => response.json())
-      //     .then((data) => {
-      //       alert("Blog posted!");
-      //     });
-      // }
+        fetch("https://blog-backend-63he.onrender.com/api/post", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ content: blogContent }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert("Blog posted!");
+          });
+      }
     </script>
   </body>
 </html>
