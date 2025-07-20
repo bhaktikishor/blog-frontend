@@ -50,7 +50,9 @@ fetch("https://blog-backend-63he.onrender.com/api/post")
     blogList.innerHTML = "";
 
     posts.forEach((post) => {
-      const snippet = post.blog_content.slice(0, 100) + "...";
+      const snippet = post.blog_content
+        ? post.blog_content.slice(0, 100) + "..."
+        : "NO content available";
 
       const card = `       <div class="card" style="width: 18rem">
           <div class="card-body">
