@@ -86,7 +86,7 @@
         height: auto;
       "
     >
-      <form id="blogForm" action="">
+      <form id="blogForm" action="" enctype="multipart/form-data">
         <label for="title">Blog title</label><br />
         <input type="text" name="title" /><br /><br />
         <label for="content">Blog content</label><br />
@@ -106,7 +106,7 @@
           <div class="text">
             <span>Click to upload image</span>
           </div>
-          <input type="file" id="file" />
+          <input type="file" id="file" name="image" />
         </label>
         <button type="submit" onclick="submitBlog()">Submit</button>
       </form>
@@ -124,14 +124,16 @@
           e.preventDefault();
           console.log("Submit button clicked");
 
-          const formData = {
-            title: document.querySelector('[name="title"]').value,
-            content: document.querySelector('[name="content"]').value,
-            author: document.querySelector('[name="author"]').value,
-            quote: document.querySelector('[name="quote"]').value,
-            review: document.querySelector('[name="review"]').value,
-            novel: document.querySelector('[name="novel"]').value,
-          };
+          // const formData = {
+          //   title: document.querySelector('[name="title"]').value,
+          //   content: document.querySelector('[name="content"]').value,
+          //   author: document.querySelector('[name="author"]').value,
+          //   quote: document.querySelector('[name="quote"]').value,
+          //   review: document.querySelector('[name="review"]').value,
+          //   novel: document.querySelector('[name="novel"]').value,
+          // };
+
+          const formData = new FormData(form);
 
           try {
             const response = await fetch(
@@ -155,21 +157,21 @@
         });
       });
 
-      function submitBlog() {
-        const blogContent = document.getElementById("blogInput").value;
+      // function submitBlog() {
+      //   const blogContent = document.getElementById("blogInput").value;
 
-        fetch("https://blog-backend-63he.onrender.com/api/post", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ content: blogContent }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            alert("Blog posted!");
-          });
-      }
+      //   fetch("https://blog-backend-63he.onrender.com/api/post", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({ content: blogContent }),
+      //   })
+      //     .then((response) => response.json())
+      //     .then((data) => {
+      //       alert("Blog posted!");
+      //     });
+      // }
     </script>
   </body>
 </html>

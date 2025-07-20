@@ -43,6 +43,9 @@ document
 fetch("https://blog-backend-63he.onrender.com/api/post")
   .then((res) => res.json())
   .then((posts) => {
+    if (!Array.isArray(posts)) {
+      throw new Error("Invalid response format");
+    }
     const blogList = document.getElementById("blogList");
     blogList.innerHTML = "";
 
