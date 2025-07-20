@@ -190,8 +190,10 @@
         console.log(formattedDate);
         const postHTML = `<div class="blog-image overlay">
             <img
-              src="https://i.pinimg.com/736x/f3/24/0a/f3240ad0d237afa68ae8a88e1782040f.jpg"
-              alt="https://i.pinimg.com/736x/f3/24/0a/f3240ad0d237afa68ae8a88e1782040f.jpg"
+              src=${
+                post.blog_image ||
+                "https://i.pinimg.com/736x/f3/24/0a/f3240ad0d237afa68ae8a88e1782040f.jpg"
+              }
               width="100%"
               height="100%"
             />
@@ -227,7 +229,9 @@
               </div>
               <div class="right-section">
                 <div class="book-recommendation">
-                  <div class="book-name fontSize">${post.blog_novel}- ${post.blog_novelauthor}</div>
+                  <div class="book-name fontSize">${post.blog_novel}- ${
+          post.blog_novelauthor
+        }</div>
                   <div class="book-quote fontSize">
                     <span id="quote">"</span>quotes ${post.blog_quote}"
                   </div>
